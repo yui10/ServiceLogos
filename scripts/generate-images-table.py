@@ -14,8 +14,8 @@ class ReadMeInfo:
     locale: str
 
 
-DOCS_FOLDER = Path(__file__).parent.parent
-ROOT_FOLDER = DOCS_FOLDER.parent
+ROOT_FOLDER = Path(__file__).parent.parent
+DOCS_FOLDER = ROOT_FOLDER / "docs"
 IMAGES_FOLDER = ROOT_FOLDER / "images"
 
 START = "<!-- image-list: start -->"
