@@ -16,6 +16,7 @@ class ReadMeInfo:
 
 DOCS_FOLDER = Path(__file__).parent.parent
 ROOT_FOLDER = DOCS_FOLDER.parent
+IMAGES_FOLDER = ROOT_FOLDER / "images"
 
 START = "<!-- image-list: start -->"
 END = "<!-- image-list: end -->"
@@ -49,7 +50,7 @@ def md_escape(txt: str) -> str:
 def find_image_folders() -> FolderDict:
     return {
         x.name: images
-        for x in ROOT_FOLDER.iterdir()
+        for x in IMAGES_FOLDER.iterdir()
         if x.is_dir() and (images := list(x.glob("*.png")))
     }
 
@@ -92,7 +93,7 @@ def generate_markdown(folders: FolderDict, locale: str | None = None) -> str:
         f"| {l5(locale, 'name')} | {l5(locale, 'image')} |",
         "| --- | --- |",
         *(
-            f"| [{md_escape(folder)}](/{quote(folder)}) | {get_image_tags(images)} |"
+            f"| [{md_escape(folder)}](/images/{quote(folder)}) | {get_image_tags(images)} |"
             for folder, images in item_list
         ),
     ]
@@ -106,7 +107,7 @@ def replace_file(content: str, inner: str) -> str:
         raise ValueError("Invalid table start or end mark")
 
     pfx = content[: start_index + len(START)]
-    sfx = content[end_index :]
+    sfx = content[end_index:]
     return f"{pfx}\n\n{inner}\n\n{sfx}"
 
 
